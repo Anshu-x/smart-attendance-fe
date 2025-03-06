@@ -12,6 +12,9 @@ const Auth = () => {
   const [login, setLogin] = useState(initialLoginState);
   const elRef = useRef(null);
   const { loginUser } = useAuth();
+  
+  // State to handle success message visibility
+  const [showSuccessMessage, setShowSuccessMessage] = useState({ type: "", message: "" });
 
   useEffect(() => {
     if (elRef.current) {
@@ -48,10 +51,21 @@ const Auth = () => {
       } else if (role === "user") {
         navigate("/user-dashboard");
       }
+      
+      // Show success message on successful login
+      setShowSuccessMessage({ type: "login", message: "Login Successful!" });
+      setTimeout(() => setShowSuccessMessage({ type: "", message: "" }), 3000);
+      
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed: " + error.message);
     }
+  };
+
+  const handleSignupSuccess = () => {
+    // Show success message on successful signup
+    setShowSuccessMessage({ type: "signup", message: "Signup Successful!" });
+    setTimeout(() => setShowSuccessMessage({ type: "", message: "" }), 3000);
   };
 
   return (
@@ -63,10 +77,25 @@ const Auth = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {/* Success message */}
+      {showSuccessMessage.message && (
+        <div className="absolute top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+          {showSuccessMessage.message}
+        </div>
+      )}
+
       <div className="bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl rounded-2xl w-full max-w-4xl h-auto overflow-hidden relative">
         <div className='flex flex-row h-auto'>
-          <Login className={`flex-1 duration-700 ${login ? "block" : "hidden md:block md:opacity-0"}`} handleClick={handleShift} handleLogin={handleLogin} />
-          <Signup className={`flex-1 duration-700 ${login ? "hidden md:block md:opacity-0" : "block"}`} handleClick={handleShift} />
+          <Login 
+            className={`flex-1 duration-700 ${login ? "block" : "hidden md:block md:opacity-0"}`} 
+            handleClick={handleShift} 
+            handleLogin={handleLogin} 
+          />
+          <Signup 
+            className={`flex-1 duration-700 ${login ? "hidden md:block md:opacity-0" : "block"}`} 
+            handleClick={handleShift} 
+            onSignupSuccess={handleSignupSuccess} 
+          />
         </div>
 
         <div ref={elRef} className={`hidden md:block absolute h-full top-0 overflow-hidden ${login ? "rounded-l-[125px]" : "rounded-r-[125px]"} duration-500`} style={{ width: "50%", transform: "translateX(100%)" }}>
