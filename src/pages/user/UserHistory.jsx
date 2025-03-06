@@ -4,7 +4,7 @@ import AttendanceCard from "../../components/AttendanceCard";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
-const AttendanceHistory = () => {
+const UserHistory = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
@@ -22,7 +22,7 @@ const AttendanceHistory = () => {
     };
   }, []);
 
-  // Sample past event data (Replace with API)
+  // Sample past event data
   const pastEvents = [
     { id: 1, name: "Tech Conference 2025", date: "Feb 10, 2025", time: "10:00 AM" },
     { id: 2, name: "AI Workshop", date: "Feb 15, 2025", time: "2:00 PM" },
@@ -64,7 +64,7 @@ const AttendanceHistory = () => {
           {/* Back Button */}
           <button
             className="mt-6 bg-gray-600 text-white py-3 px-6 rounded-lg text-lg w-full transition-transform hover:scale-102 hover:bg-gray-500 shadow-lg"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/user-dashboard")}
           >
             Back to Dashboard
           </button>
@@ -74,4 +74,4 @@ const AttendanceHistory = () => {
   );
 };
 
-export default AttendanceHistory;
+export default UserHistory;

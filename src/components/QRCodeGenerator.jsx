@@ -12,8 +12,8 @@ const QRCodeGenerator = ({ eventName }) => {
     const generatedCode = `EVENT-${Date.now()}`;
     setEventCode(generatedCode);
 
-    // Navigate to the QRCodeDisplay component
-    navigate("/qr-display", { state: { eventCode: generatedCode } });
+    // Navigate to QRCodeDisplay component
+    navigate("/admin-qr-display", { state: { eventCode: generatedCode } });
   };
 
   return (

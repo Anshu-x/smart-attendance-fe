@@ -38,19 +38,19 @@ const AdminDashboard = () => {
         <div className="mt-6 flex flex-col md:flex-row gap-4">
           <button
             className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg text-lg transition-transform hover:scale-105 hover:bg-blue-500 shadow-lg flex items-center justify-center gap-2"
-            onClick={() => navigate("/create-event")}
+            onClick={() => navigate("/admin-create-event")}
           >
             <i className="fas fa-calendar-plus"></i> Create Event
           </button>
           <button
             className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg text-lg transition-transform hover:scale-105 hover:bg-green-500 shadow-lg flex items-center justify-center gap-2"
-            onClick={() => navigate("/attendance-records")}
+            onClick={() => navigate("/admin-attendance-records")}
           >
             <i className="fas fa-file-alt"></i> View Attendance Records
           </button>
           <button
             className="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg text-lg transition-transform hover:scale-105 hover:bg-purple-500 shadow-lg flex items-center justify-center gap-2"
-            onClick={() => navigate("/my-events")}
+            onClick={() => navigate("/admin-my-events")}
           >
             <i className="fas fa-calendar-alt"></i> My Events
           </button>

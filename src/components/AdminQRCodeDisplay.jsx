@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const QRCodeDisplay = () => {
+const AdminQRCodeDisplay = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { event } = location.state || {};
@@ -12,7 +12,7 @@ const QRCodeDisplay = () => {
 
   useEffect(() => {
     if (!event) {
-      navigate("/my-events");
+      navigate("/admin-my-events");
       return;
     }
 
@@ -45,7 +45,7 @@ const QRCodeDisplay = () => {
       </div>
       <p className="text-gray-300 mt-4">QR Code refreshes in {timeRemaining} seconds</p>
       <button
-        onClick={() => navigate("/my-events")}
+        onClick={() => navigate("/admin-my-events")}
         className="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg text-lg transition-transform hover:scale-105 hover:bg-blue-500 shadow-lg"
       >
         Back to My Events
@@ -54,4 +54,4 @@ const QRCodeDisplay = () => {
   );
 };
 
-export default QRCodeDisplay;
+export default AdminQRCodeDisplay;

@@ -27,17 +27,22 @@ const Sidebar = ({ isOpen, toggleSidebar, role }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/my-events" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
+                  <Link to="/admin-create-event" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
+                    Create Event
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin-my-events" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
                     My Events
                   </Link>
                 </li>
                 <li>
-                  <Link to="/attendance-records" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
+                  <Link to="/admin-attendance-records" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
                     Attendance Records
                   </Link>
                 </li>
                 <li>
-                  <Link to="/settings" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
+                  <Link to="/admin-settings" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
                     Settings
                   </Link>
                 </li>
@@ -45,12 +50,17 @@ const Sidebar = ({ isOpen, toggleSidebar, role }) => {
             ) : (
               <>
                 <li>
-                  <Link to="/" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
+                  <Link to="/user-dashboard" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
                     Dashboard
                   </Link>
                 </li>
                 <li>
-                  <Link to="/history" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
+                  <Link to="/user-scan-attendance" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
+                    Mark Attendance
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/user-history" className="text-lg hover:text-blue-400" onClick={toggleSidebar}>
                     Attendance History
                   </Link>
                 </li>

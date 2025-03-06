@@ -5,8 +5,12 @@ import Sidebar from "../../components/Sidebar";
 import QRScanner from "../../components/QRScanner";
 import FaceRecognition from "../../components/FaceRecognition";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext"; 
 
-const ScanAttendance = () => {
+const UserScanAttendance = () => {
+  const { user } = useAuth(); // Get user context
+  const userId = user?.id; // Extract user ID
+
   const [qrVerified, setQrVerified] = useState(false);
   const [faceVerified, setFaceVerified] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,11 +31,11 @@ const ScanAttendance = () => {
     <div 
       className="min-h-screen bg-gray-900 text-white relative overflow-hidden"
       style={{
-        backgroundImage: "url('/bg-pattern.jpg')", // Background Image
+        backgroundImage: "url('/bg-pattern.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        opacity: 0.9, // Dim Effect
+        opacity: 0.9, 
       }}
     >
       <div className="relative z-10 p-6 md:p-10">
@@ -41,7 +45,7 @@ const ScanAttendance = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center text-center w-full max-w-md mx-auto mt-20">
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode="wait">
             {!qrVerified ? (
               <motion.div
                 key="qr"
@@ -50,7 +54,7 @@ const ScanAttendance = () => {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                <QRScanner onSuccess={() => setQrVerified(true)} />
+                <QRScanner onSuccess={() => setQrVerified(true)} userId={userId} />
               </motion.div>
             ) : !faceVerified ? (
               <motion.div
@@ -76,7 +80,7 @@ const ScanAttendance = () => {
                   </p>
                   <button
                     className="mt-4 bg-blue-600 text-white py-3 px-6 rounded-lg text-lg transition-transform hover:scale-105 hover:bg-blue-500 shadow-lg"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/user-dashboard")}
                   >
                     Go to Dashboard
                   </button>
@@ -90,4 +94,4 @@ const ScanAttendance = () => {
   );
 };
 
-export default ScanAttendance;
+export default UserScanAttendance;

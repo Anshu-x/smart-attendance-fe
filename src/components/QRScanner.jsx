@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
 import { BrowserMultiFormatReader } from "@zxing/library";
+import { checkInAttendance } from "../utils/api"; 
 
-const QRScanner = ({ onSuccess }) => {
+const QRScanner = ({ onSuccess, userId }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [scanning, setScanning] = useState(false);
   const webcamRef = useRef(null);
@@ -26,10 +27,21 @@ const QRScanner = ({ onSuccess }) => {
     codeReader.current.decodeFromVideoDevice(
       undefined,
       videoElement,
-      (result, error) => {
+      async (result, error) => {
         if (result) {
-          onSuccess(result.getText());
           stopScan();
+          const qrData = result.getText();
+          console.log("✅ QR Scanned:", qrData);
+
+          try {
+            // Send API request to mark attendance
+            const response = await checkInAttendance(qrData, userId);
+            alert("✅ Attendance marked successfully!");
+            onSuccess();
+          } catch (err) {
+            console.error("❌ Attendance failed:", err);
+            alert("❌ Failed to mark attendance!");
+          }
         }
         if (error) {
           console.error(error);

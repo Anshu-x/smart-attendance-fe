@@ -1,16 +1,47 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import axios from "axios";
 
-const Profile = () => {
+const UserProfile = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const sidebarRef = useRef(null);
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:3000/api/auth/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+        setError("Failed to load user profile.");
+        setLoading(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div 
@@ -30,12 +61,12 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center text-center w-full max-w-4xl mx-auto mt-20">
-          <h1 className="text-4xl font-bold mb-6 text-blue-500">Profile</h1>
+          <h1 className="text-4xl font-bold mb-6 text-blue-500">User Profile</h1>
           <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full">
             <div className="flex justify-center mb-6">
               <img
-                src="/default-avatar.png"
-                alt="Profile"
+                src={user.avatar || "/default-avatar.png"}
+                alt="UserProfile"
                 className="w-32 h-32 rounded-full border-4 border-blue-600 shadow-lg"
               />
             </div>
@@ -47,7 +78,7 @@ const Profile = () => {
                   <input
                     type="text"
                     className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="John Doe"
+                    value={user.fullName}
                     readOnly
                   />
                 </div>
@@ -56,7 +87,7 @@ const Profile = () => {
                   <input
                     type="email"
                     className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="john.doe@example.com"
+                    value={user.email}
                     readOnly
                   />
                 </div>
@@ -65,7 +96,7 @@ const Profile = () => {
                   <input
                     type="text"
                     className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="+1234567890"
+                    value={user.phoneNumber}
                     readOnly
                   />
                 </div>
@@ -77,7 +108,7 @@ const Profile = () => {
                   <input
                     type="text"
                     className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="01/01/1990"
+                    value={user.dateOfBirth}
                     readOnly
                   />
                 </div>
@@ -85,7 +116,7 @@ const Profile = () => {
                   <label className="block text-gray-400 text-sm font-bold mb-2">Address</label>
                   <textarea
                     className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="123 Main St, City, Country"
+                    value={user.address}
                     readOnly
                   />
                 </div>
@@ -110,9 +141,9 @@ const Profile = () => {
               <div>
                 <h2 className="text-2xl font-bold mb-4 text-blue-400">Contact Information</h2>
                 <div className="flex flex-col items-center">
-                  <a href="https://twitter.com" className="text-blue-400 hover:underline mb-2">Twitter</a>
-                  <a href="https://linkedin.com" className="text-blue-400 hover:underline mb-2">LinkedIn</a>
-                  <a href="https://facebook.com" className="text-blue-400 hover:underline">Facebook</a>
+                  <a href={user.twitter} className="text-blue-400 hover:underline mb-2">Twitter</a>
+                  <a href={user.linkedin} className="text-blue-400 hover:underline mb-2">LinkedIn</a>
+                  <a href={user.facebook} className="text-blue-400 hover:underline">Facebook</a>
                 </div>
               </div>
             </div>
@@ -129,4 +160,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserProfile;

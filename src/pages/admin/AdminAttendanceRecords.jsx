@@ -4,7 +4,7 @@ import { saveAs } from "file-saver";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
-const AttendanceRecords = () => {
+const AdminAttendanceRecords = () => {
   const [records, setRecords] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -118,4 +118,4 @@ const AttendanceRecords = () => {
   );
 };
 
-export default AttendanceRecords;
+export default AdminAttendanceRecords;
